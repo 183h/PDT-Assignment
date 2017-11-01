@@ -1,6 +1,7 @@
 static/bootstrap
 static/jquery
 static/leaflet
+static/popper.js
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
