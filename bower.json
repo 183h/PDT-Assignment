@@ -1,0 +1,19 @@
+{
+  "name": "PDT-Assignment",
+  "homepage": "https://github.com/mpuk/PDT-Assignment",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "leaflet": "^1.2.0",
+    "bootstrap": "^3.3.7"
+  }
+}
