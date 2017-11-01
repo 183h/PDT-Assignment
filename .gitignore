@@ -2,6 +2,7 @@ static/bootstrap
 static/jquery
 static/leaflet
 static/popper.js
+static/Leaflet.EasyButton
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
