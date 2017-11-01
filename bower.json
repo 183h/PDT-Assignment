@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "leaflet": "^1.2.0",
-    "bootstrap": "v4.0.0-beta"
+    "bootstrap": "v4.0.0-beta",
+    "Leaflet.EasyButton": "^2.2.4"
   }
 }
