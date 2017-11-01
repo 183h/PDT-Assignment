@@ -6,6 +6,7 @@
     
     <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='leaflet/dist/leaflet.css') }}">
+    <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='Leaflet.EasyButton/src/easy-button.css') }}">
     
     <script type="text/javascript" src="{{url_for('static', filename='jquery/dist/jquery.min.js')}}">
     </script>
@@ -17,18 +18,25 @@
     </script>
     <script type="text/javascript" src="{{url_for('static', filename='app.js')}}">
     </script>
+    <script type="text/javascript" src="{{url_for('static', filename='Leaflet.EasyButton/src/easy-button.js')}}">
+    </script>
 
     <style type="text/css">
         #mapid { 
-            height:950px;
+            height: 950px;
+        }
+
+        #col1 {
+          padding-top: 30px;
         }
     </style>
 </head>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">
+        <div id="col1" class="col-2">
         </div>
+
         <div class="col">
             <div id="mapid">
           
