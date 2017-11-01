@@ -14,7 +14,6 @@
   ],
   "dependencies": {
     "leaflet": "^1.2.0",
-    "bootstrap": "^3.3.7",
-    "popper.js": "^1.12.6"
+    "bootstrap": "v4.0.0-beta"
   }
 }
