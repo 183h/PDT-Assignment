@@ -1,30 +1,39 @@
-$( document ).ready(function() {
+$(document).ready(function() {
+	
+	// variables definitions
+	map = L.map('mapid').setView([48.6905689, 19.4581682], 8);
+	hikesLayer = L.geoJSON(null, {
+    	onEachFeature: addPopup
+	}).on('click', function (e) {
+  console.log("kliknute")
+}).addTo(map);
 
-	function onEachFeature(feature, layer) {
-	    // does this feature have a property named popupContent?
+	// functions definitions
+	function callApi(apiUrl) {
+		var apiCallResult = null;
+
+		$.ajax({
+	    	url: 'http://127.0.0.1:5000/' + apiUrl,
+	    	async: false,
+	    	success: function(result){
+	        	apiCallResult = result;
+	    	}
+		});
+
+		return apiCallResult;
+	}
+
+	function addPopup(feature, layer) {
 	    if (feature.properties && feature.properties.f1) {
 	        layer.bindPopup(feature.properties.f1);
 	    }
 	}
 
-	apiCallResult = null;
+	// page logic
+	allHikes = callApi('api/get/hikes')
+	console.log("allhikes", allHikes)
 
-	$.ajax({
-	    url: 'http://127.0.0.1:5000/api/get/hiking',
-	    async: false,
-	    success: function(result){
-	        apiCallResult = result;
-	    }
-	});
-
-	console.log(apiCallResult.data[0][0].features)
-
-	map = L.map('mapid').setView([48.6905689, 19.4581682], 8);
-
-	L.geoJSON(apiCallResult.data[0][0].features, {
-    	onEachFeature: onEachFeature
-	}).addTo(map);
-	// L.geoJSON(geo1).addTo(map);
+	hikesLayer.addData(allHikes.data[0][0].features);
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -43,4 +52,5 @@ $( document ).ready(function() {
     		// save coordinates
 		});
 	}).addTo(map);
+
 });
