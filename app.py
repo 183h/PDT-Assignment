@@ -18,12 +18,21 @@ def api_get_hiking():
     cur.execute(
         "SELECT row_to_json(fc) \
         FROM ( \
-            SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features \
+            SELECT \
+                'FeatureCollection' AS type, \
+                array_to_json(array_agg(f)) AS features \
             FROM ( \
-                SELECT 'Feature' As type , ST_AsGeoJSON(ST_Transform(way, 4326))::json As geometry, row_to_json((name, operator)) As properties \
-                FROM planet_osm_line where route = 'hiking' and name is not null) \
-            As f ) \
-        As fc;"
+                SELECT \
+                    'Feature' AS type, \
+                    ST_AsGeoJSON(ST_Transform(ST_Collect(way), 4326))::json AS geometry, \
+                    row_to_json((name, operator, st_length(ST_Collect(way)))) AS properties \
+                FROM planet_osm_line  \
+                WHERE route = 'hiking' \
+                    and name is not null \
+                GROUP by name, operator \
+            ) \
+            AS f ) \
+        AS fc;"
     )
 
     response = cur.fetchall()
