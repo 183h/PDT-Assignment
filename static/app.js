@@ -29,7 +29,7 @@ $(document).ready(function() {
 	}
 
 	function styleHikeDifficulty(feature) {
-		var hikeLengthKm = feature.properties.f3 / 1000
+		var hikeLengthKm = feature.properties.f3
 		if ((50 < hikeLengthKm) && (hikeLengthKm <= 100)) {
 			return {color: "#cc0000"};
 		}
@@ -41,6 +41,19 @@ $(document).ready(function() {
 	// page logic
 	allHikes = callApi('api/get/hikes')
 	hikesLayer.addData(allHikes.data[0][0].features);
+
+	var options = {
+  		valueNames: [ 'f1', 'f3' ],
+  		item: '<li><p class="f1"></p><b>Km:</b> <span class="f3"></span><hr /></li>',
+  		page: 5,
+  		pagination: true
+	};
+
+	var hikeList = new List('hike-list', options);
+	allHikes.data[0][0].features.forEach(function(element) {
+    	hikeList.add( element.properties );
+	}); 
+
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
