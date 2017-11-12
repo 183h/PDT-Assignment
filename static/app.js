@@ -30,21 +30,16 @@ $(document).ready(function() {
 
 	function styleHikeDifficulty(feature) {
 		var hikeLengthKm = feature.properties.f3 / 1000
-		console.log(hikeLengthKm)
 		if ((50 < hikeLengthKm) && (hikeLengthKm <= 100)) {
-			console.log("1")
 			return {color: "#cc0000"};
 		}
 		else if (100 < hikeLengthKm) {
-			console.log("1")
 			return {color: "#ff00ff"};
 		}
 	}
 
 	// page logic
 	allHikes = callApi('api/get/hikes')
-	console.log("allhikes", allHikes)
-
 	hikesLayer.addData(allHikes.data[0][0].features);
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
