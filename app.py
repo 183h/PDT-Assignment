@@ -1,4 +1,5 @@
 # This Python file uses the following encoding: utf-8
+
 from flask import Flask, render_template, jsonify
 from psycopg2 import connect
 
