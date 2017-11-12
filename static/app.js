@@ -3,10 +3,9 @@ $(document).ready(function() {
 	// variables definitions
 	map = L.map('mapid').setView([48.6905689, 19.4581682], 8);
 	hikesLayer = L.geoJSON(null, {
-    	onEachFeature: addPopup
-	}).on('click', function (e) {
-  console.log("kliknute")
-}).addTo(map);
+    	onEachFeature: addPopup,
+    	style: styleHikeDifficulty
+	}).addTo(map);
 
 	// functions definitions
 	function callApi(apiUrl) {
@@ -27,6 +26,19 @@ $(document).ready(function() {
 	    if (feature.properties && feature.properties.f1) {
 	        layer.bindPopup(feature.properties.f1);
 	    }
+	}
+
+	function styleHikeDifficulty(feature) {
+		var hikeLengthKm = feature.properties.f3 / 1000
+		console.log(hikeLengthKm)
+		if ((50 < hikeLengthKm) && (hikeLengthKm <= 100)) {
+			console.log("1")
+			return {color: "#cc0000"};
+		}
+		else if (100 < hikeLengthKm) {
+			console.log("1")
+			return {color: "#ff00ff"};
+		}
 	}
 
 	// page logic
