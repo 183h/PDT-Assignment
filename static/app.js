@@ -7,6 +7,15 @@ $(document).ready(function() {
     	style: styleHikeDifficulty
 	}).addTo(map);
 
+	var options = {
+  		valueNames: [ 'f1', 'f3', 'f4' ],
+  		item: 'hacker-item', 
+  		page: 5,
+  		pagination: true
+	};
+
+	var hikeList = new List('hike-list', options);
+
 	// functions definitions
 	function callApi(apiUrl) {
 		var apiCallResult = null;
@@ -41,19 +50,16 @@ $(document).ready(function() {
 	// page logic
 	allHikes = callApi('api/get/hikes')
 	hikesLayer.addData(allHikes.data[0][0].features);
-
-	var options = {
-  		valueNames: [ 'f1', 'f3' ],
-  		item: '<li class="list-group-item d-flex justify-content-between align-items-center"><p class="f1"></p><span class="f3 badge badge-primary badge-pill pull-left"></span></li>', 
-  		page: 5,
-  		pagination: true
-	};
-
-	var hikeList = new List('hike-list', options);
+	
 	allHikes.data[0][0].features.forEach(function(element) {
-    	hikeList.add( element.properties );
-	}); 
+    	hikeList.add(element.properties);
+	});
 
+	$( "#hikeList li" ).on( "click", function() {
+  		var geometry = $(this).find('input').text();
+  		var latLong = geometry.replace('POINT', '').replace('(', '').replace(')', '').split(' ');
+  		map.setView({lat: parseFloat(latLong[1]), lng: parseFloat(latLong[0])}, 13);
+	});
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
