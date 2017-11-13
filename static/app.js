@@ -44,7 +44,7 @@ $(document).ready(function() {
 
 	var options = {
   		valueNames: [ 'f1', 'f3' ],
-  		item: '<li><p class="f1"></p><b>Km:</b> <span class="f3"></span><hr /></li>',
+  		item: '<li class="list-group-item d-flex justify-content-between align-items-center"><p class="f1"></p><span class="f3 badge badge-primary badge-pill pull-left"></span></li>', 
   		page: 5,
   		pagination: true
 	};
