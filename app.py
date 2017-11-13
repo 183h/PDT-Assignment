@@ -26,7 +26,12 @@ def api_get_hiking():
                 SELECT \
                     'Feature' AS type, \
                     ST_AsGeoJSON(ST_Transform(ST_Collect(way), 4326))::json AS geometry, \
-                    row_to_json((name, operator, round((st_length(ST_Collect(way))::numeric/1000), 2))) AS properties \
+                    row_to_json(( \
+                        name, \
+                        operator, \
+                        round((st_length(ST_Collect(way))::numeric/1000), 2), \
+                        ST_AsText(ST_Centroid(ST_Transform(ST_Collect(way), 4326))) \
+                    )) AS properties \
                 FROM planet_osm_line  \
                 WHERE route = 'hiking' \
                     and name is not null \
