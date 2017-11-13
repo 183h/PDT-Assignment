@@ -55,7 +55,7 @@ $(document).ready(function() {
     	hikeList.add(element.properties);
 	});
 
-	$( "#hikeList li" ).on( "click", function() {
+	$( "#hikeList a" ).on( "click", function() {
   		var geometry = $(this).find('input').text();
   		var latLong = geometry.replace('POINT', '').replace('(', '').replace(')', '').split(' ');
   		map.setView({lat: parseFloat(latLong[1]), lng: parseFloat(latLong[0])}, 13);
