@@ -1,10 +1,26 @@
 $(document).ready(function() {
 	
 	// variables definitions
+	var selected
 	map = L.map('mapid').setView([48.6905689, 19.4581682], 8);
 	hikesLayer = L.geoJSON(null, {
     	onEachFeature: addPopup,
     	style: styleHikeDifficulty
+	}).on('click', function (e) {
+	  // Check for selected
+	  if (selected) {
+	    // Reset selected to default style
+	    e.target.resetStyle(selected)
+	  }
+	  // Assign new selected
+	  selected = e.layer
+	  // Bring selected to front
+	  selected.bringToFront()
+	  // Style selected
+	  selected.setStyle({
+	  	'weight': 7,
+	    'color': 'green'
+	  })
 	}).addTo(map);
 
 	var options = {
