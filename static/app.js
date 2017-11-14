@@ -1,8 +1,8 @@
 $(document).ready(function() {
-	
 	// variables definitions
 	var selected
 	map = L.map('mapid').setView([48.6905689, 19.4581682], 8);
+	amenitiesLayer = L.geoJSON(null).addTo(map);
 	hikesLayer = L.geoJSON(null, {
     	onEachFeature: addPopup,
     	style: styleHikeDifficulty
@@ -13,7 +13,12 @@ $(document).ready(function() {
 	    e.target.resetStyle(selected)
 	  }
 	  // Assign new selected
+	  amenitiesLayer.clearLayers()
+	  amenitiesLayer = L.geoJSON(null).addTo(map);
 	  selected = e.layer
+	  amenities = callApi('api/get/amenities/'+e.layer.feature.properties.f1)
+	  if (amenities.data[0][0].features)
+   	  	amenitiesLayer.addData(amenities.data[0][0].features);
 	  // Bring selected to front
 	  selected.bringToFront()
 	  // Style selected
@@ -71,10 +76,12 @@ $(document).ready(function() {
     	hikeList.add(element.properties);
 	});
 
-	$( "#hikeList a" ).on( "click", function() {
-  		var geometry = $(this).find('input').text();
-  		var latLong = geometry.replace('POINT', '').replace('(', '').replace(')', '').split(' ');
-  		map.setView({lat: parseFloat(latLong[1]), lng: parseFloat(latLong[0])}, 13);
+	$( "#hikeList" ).on( "mouseenter", function() {
+  		$( "#hikeList a" ).on( "click", function() {
+  			var geometry = $(this).find('input').text();
+  			var latLong = geometry.replace('POINT', '').replace('(', '').replace(')', '').split(' ');
+  			map.setView({lat: parseFloat(latLong[1]), lng: parseFloat(latLong[0])}, 13);
+		});
 	});
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -94,5 +101,4 @@ $(document).ready(function() {
     		// save coordinates
 		});
 	}).addTo(map);
-
 });
