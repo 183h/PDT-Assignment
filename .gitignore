@@ -4,6 +4,7 @@ static/leaflet
 static/popper.js
 static/Leaflet.EasyButton
 static/list.js
+static/node_modules
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
