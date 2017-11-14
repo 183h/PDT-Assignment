@@ -4,9 +4,10 @@
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='leaflet/dist/leaflet.css') }}">
-    <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='Leaflet.EasyButton/src/easy-button.css') }}">
+    <link rel="stylesheet" media="screen" href ="{{ url_for('static', filename='bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" media="screen" href ="{{ url_for('static', filename='leaflet/dist/leaflet.css') }}">
+    <link rel="stylesheet" media="screen" href ="{{ url_for('static', filename='Leaflet.EasyButton/src/easy-button.css') }}">
+    <link rel="stylesheet" media="screen" href ="{{ url_for('static', filename='node_modules/leaflet-legend/leaflet-legend.css') }}">
     
     <script type="text/javascript" src="{{url_for('static', filename='jquery/dist/jquery.min.js')}}">
     </script>
@@ -21,6 +22,10 @@
     <script type="text/javascript" src="{{url_for('static', filename='Leaflet.EasyButton/src/easy-button.js')}}">
     </script>
     <script type="text/javascript" src="{{url_for('static', filename='list.js/dist/list.min.js')}}">
+    </script>
+    <script type="text/javascript" src="{{url_for('static', filename='list.js/dist/list.min.js')}}">
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/leaflet-legend/leaflet-legend.js') }}">
     </script>
 
     <style type="text/css">
@@ -49,7 +54,7 @@
                 </div>
                 <hr />
                 <div id="hikeList" dir="rtl" class="list list-group"></div>
-                <ul class="pagination"></ul>
+                <ul id="pages" class="pagination"></ul>
             </div>
         </div>
 
