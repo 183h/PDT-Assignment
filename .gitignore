@@ -6,6 +6,7 @@ static/Leaflet.EasyButton
 static/list.js
 static/node_modules
 static/Leaflet.awesome-markers
+static/font-awesome
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
