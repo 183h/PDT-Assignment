@@ -73,8 +73,8 @@ def api_get_amenities(hike):
                     from hike as h \
                     cross join planet_osm_point as p \
                     where \
-                        p.historic = 'memorial' \
-                        and p.name is not null \
+                        p.name is not null \
+                        and p.historic is not null \
                         and ST_DWithin(h.geometry, p.way, 5000) \
                 ) AS f \
             ) AS fc;"
