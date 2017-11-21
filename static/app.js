@@ -69,30 +69,33 @@ $(document).ready(function() {
     	onEachFeature: addPopup,
     	style: styleHikeDifficulty
 	}).on('click', function (e) {
-	  // Check for selected
-	  if (selected) {
-	    // Reset selected to default style
-	    e.target.resetStyle(selected)
-	  }
-	  // Assign new selected
-	  amenitiesLayer.clearLayers()
-	  amenitiesLayer = L.geoJSON(null, {
-	  	onEachFeature: addPopup,
-    	pointToLayer: function(feature, latlng) {
-        	return L.marker(latlng, {icon: markers[feature.properties.f2]});
-        }
-      }).addTo(map);
-	  selected = e.layer
-	  amenities = callApi('api/get/amenities/'+e.layer.feature.properties.f1)
-	  if (amenities.data[0][0].features)
-   	  	amenitiesLayer.addData(amenities.data[0][0].features);
-	  // Bring selected to front
-	  selected.bringToFront()
-	  // Style selected
-	  selected.setStyle({
-	  	'weight': 7,
-	    'color': 'green'
-	  })
+	  	// Check for selected
+	  	if (selected) {	    
+	    	// Reset selected to default style
+	    	e.target.resetStyle(selected)
+	  	}
+	  
+	  	// Assign new selected
+	  	amenitiesLayer.clearLayers()
+	  	amenitiesLayer = L.geoJSON(null, {
+	  		onEachFeature: addPopup,
+    		pointToLayer: function(feature, latlng) {
+        		return L.marker(latlng, {icon: markers[feature.properties.f2]});
+        	}
+      	}).addTo(map);
+	  	
+	  	selected = e.layer
+	  	amenities = callApi('api/get/amenities/'+e.layer.feature.properties.f1)
+	  	if (amenities.data[0][0].features)
+   	  		amenitiesLayer.addData(amenities.data[0][0].features);
+	  
+	  	// Bring selected to front
+	  	selected.bringToFront()
+	  	// Style selected
+	  	selected.setStyle({
+	  		'weight': 7,
+	    	'color': 'green'
+	  	})
 	}).addTo(map);
 
 	var options = {
@@ -101,7 +104,6 @@ $(document).ready(function() {
   		page: 5,
   		pagination: true
 	};
-
 	var hikeList = new List('hike-list', options);
 
 	// functions definitions
