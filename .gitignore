@@ -7,6 +7,7 @@ static/list.js
 static/node_modules
 static/Leaflet.awesome-markers
 static/font-awesome
+static/leaflet.markercluster
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
