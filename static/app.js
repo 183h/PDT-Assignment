@@ -61,15 +61,45 @@ $(document).ready(function() {
 	}
 
 	// variables definitions
+	var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+	var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
+	var token = 'pk.eyJ1IjoibXB1ayIsImEiOiJjajgwMzViM2k2OG1jMnFudHFpZWFpcDBuIn0.tJeJccXTdskhNbv2IS5kAQ';
 	var selected
 	map = L.map('mapid').setView([48.6905689, 19.4581682], 8);
 	amenitiesLayer = L.geoJSON(null).addTo(map);
 
-	hikesLayer = L.geoJSON(null, {
+	easyHikes = L.geoJSON(null, {
     	onEachFeature: addHikePopup,
     	style: styleHikeDifficulty
-	}).on('click', function (e) {
-	  	// Check for selected
+	}).on({
+		click: hikeClicked
+	}).addTo(map);
+
+	mediumHikes = L.geoJSON(null, {
+    	onEachFeature: addHikePopup,
+    	style: styleHikeDifficulty
+	}).on({
+		click: hikeClicked
+	}).addTo(map);
+
+	hardHikes = L.geoJSON(null, {
+    	onEachFeature: addHikePopup,
+    	style: styleHikeDifficulty
+	}).on({
+		click: hikeClicked
+	}).addTo(map);
+
+	var options = {
+  		valueNames: [ 'f1', 'f3', 'f4' ],
+  		item: 'hacker-item', 
+  		page: 5,
+  		pagination: true
+	};
+	var hikeList = new List('hike-list', options);
+
+	// functions definitions
+	function hikeClicked(e) {
+		// Check for selected
 	  	if (selected) {	    
 	    	// Reset selected to default style
 	    	e.target.resetStyle(selected)
@@ -99,17 +129,8 @@ $(document).ready(function() {
 	  		'weight': 7,
 	    	'color': 'green'
 	  	})
-	}).addTo(map);
+	}
 
-	var options = {
-  		valueNames: [ 'f1', 'f3', 'f4' ],
-  		item: 'hacker-item', 
-  		page: 5,
-  		pagination: true
-	};
-	var hikeList = new List('hike-list', options);
-
-	// functions definitions
 	function callApi(apiUrl) {
 		var apiCallResult = null;
 
@@ -151,10 +172,19 @@ $(document).ready(function() {
 
 	// page logic
 	allHikes = callApi('api/get/hikes')
-	hikesLayer.addData(allHikes.data[0][0].features);
-	
 	allHikes.data[0][0].features.forEach(function(element) {
     	hikeList.add(element.properties);
+
+    	var hikeLengthKm = element.properties.f3
+    	if (hikeLengthKm < 50) {
+    		easyHikes.addData(element);
+    	}
+		else if ((50 < hikeLengthKm) && (hikeLengthKm <= 100)) {
+			mediumHikes.addData(element);
+		}
+		else if (100 < hikeLengthKm) {
+			hardHikes.addData(element);
+		}
 	});
 
 	$('#hikeList').on('mouseenter', function() {
@@ -164,10 +194,6 @@ $(document).ready(function() {
   			map.setView({lat: parseFloat(latLong[1]), lng: parseFloat(latLong[0])}, 13);
 		});
 	});
-
-	var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
-	var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
-	var token = 'pk.eyJ1IjoibXB1ayIsImEiOiJjajgwMzViM2k2OG1jMnFudHFpZWFpcDBuIn0.tJeJccXTdskhNbv2IS5kAQ';
 
 	L.tileLayer(url, {
     	attribution: attribution,
@@ -203,4 +229,12 @@ $(document).ready(function() {
     		// save coordinates
 		});
 	}).addTo(map);
+
+	var overlayMaps = {
+    	"Easy hikes": easyHikes,
+    	"Medium hikes": mediumHikes,
+    	"Hard hikes": hardHikes
+	};
+
+	L.control.layers(null, overlayMaps).addTo(map);
 });
