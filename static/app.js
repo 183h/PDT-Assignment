@@ -156,11 +156,32 @@ $(document).ready(function() {
 		});
 	});
 
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+	var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
+	var token = 'pk.eyJ1IjoibXB1ayIsImEiOiJjajgwMzViM2k2OG1jMnFudHFpZWFpcDBuIn0.tJeJccXTdskhNbv2IS5kAQ';
+
+	L.tileLayer(url, {
+    	attribution: attribution,
     	maxZoom: 18,
     	id: 'mapbox.streets',
-    	accessToken: 'pk.eyJ1IjoibXB1ayIsImEiOiJjajgwMzViM2k2OG1jMnFudHFpZWFpcDBuIn0.tJeJccXTdskhNbv2IS5kAQ'
+    	accessToken: token
+	}).addTo(map);
+
+	var miniMapLayer = L.tileLayer(url, {
+    	attribution: attribution,
+    	maxZoom: 18,
+    	id: 'mapbox.streets',
+    	accessToken: token
+	});
+	var hikesMiniMap = L.geoJson(allHikes.data[0][0].features, {
+		style: styleHikeDifficulty
+	});
+	var miniMapLayerGroup = new L.LayerGroup([miniMapLayer, hikesMiniMap]);
+	var miniMap = new L.Control.MiniMap(miniMapLayerGroup, {
+		width: 350,
+		height: 350,
+		toggleDisplay: true,
+		zoomLevelOffset: -3
 	}).addTo(map);
 
 	L.easyButton('<img src="static/icons/location.png">', function (btn, map) {
