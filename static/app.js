@@ -66,7 +66,7 @@ $(document).ready(function() {
 	amenitiesLayer = L.geoJSON(null).addTo(map);
 
 	hikesLayer = L.geoJSON(null, {
-    	onEachFeature: addPopup,
+    	onEachFeature: addHikePopup,
     	style: styleHikeDifficulty
 	}).on('click', function (e) {
 	  	// Check for selected
@@ -80,7 +80,7 @@ $(document).ready(function() {
 
 	  	amenitiesLayer.clearLayers()
 	  	amenitiesLayer = L.geoJSON(null, {
-	  		onEachFeature: addPopup,
+	  		onEachFeature: addAmenityPopup,
     		pointToLayer: function(feature, latlng) {
         		return L.marker(latlng, {icon: markers[feature.properties.f2]});
         	}
@@ -124,10 +124,19 @@ $(document).ready(function() {
 		return apiCallResult;
 	}
 
-	function addPopup(feature, layer) {
-	    if (feature.properties && feature.properties.f1) {
-	        layer.bindPopup(feature.properties.f1);
-	    }
+	function addAmenityPopup(feature, layer) {
+		var string = "";
+		string += "Name" + " : " + feature.properties.f1 + "<br>"
+		string += "Type" + " : " + feature.properties.f2 + "<br>"
+		layer.bindPopup(string);
+	}
+
+	function addHikePopup(feature, layer) {
+		var string = "";
+		string += "Name" + " : " + feature.properties.f1 + "<br>"
+		string += "Operator" + " : " + (feature.properties.f2 || "") + "<br>"
+		string += "Length" + " : " + feature.properties.f3 + " km <br>"
+		layer.bindPopup(string);
 	}
 
 	function styleHikeDifficulty(feature) {
