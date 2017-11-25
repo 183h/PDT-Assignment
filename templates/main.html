@@ -43,6 +43,10 @@
           display:inline-block;
           padding:5px;
         }
+
+        #pill:after {
+            content: " km";
+        }
     </style>
 </head>
 
@@ -71,7 +75,7 @@
 <div style="display:none;">
     <a href="#" id="hacker-item" class="list-group-item list-group-item-action" d-flex justify-content-between align-items-center">
         <p class="f1" style="text-align: left"></p>
-        <span class="f3 badge badge-primary badge-pill pull-left"></span>
+        <span id="pill" class="f3 badge badge-primary badge-pill pull-left"></span>
         <input class="f4" type="hidden">
     </a>
 </div>
