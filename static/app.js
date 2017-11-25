@@ -64,7 +64,7 @@ $(document).ready(function() {
 	var selected
 	map = L.map('mapid').setView([48.6905689, 19.4581682], 8);
 	amenitiesLayer = L.geoJSON(null).addTo(map);
-	
+
 	hikesLayer = L.geoJSON(null, {
     	onEachFeature: addPopup,
     	style: styleHikeDifficulty
@@ -76,19 +76,22 @@ $(document).ready(function() {
 	  	}
 	  
 	  	// Assign new selected
+	  	clusters = L.markerClusterGroup();
+
 	  	amenitiesLayer.clearLayers()
 	  	amenitiesLayer = L.geoJSON(null, {
 	  		onEachFeature: addPopup,
     		pointToLayer: function(feature, latlng) {
         		return L.marker(latlng, {icon: markers[feature.properties.f2]});
         	}
-      	}).addTo(map);
+      	});
 	  	
 	  	selected = e.layer
 	  	amenities = callApi('api/get/amenities/'+e.layer.feature.properties.f1)
 	  	if (amenities.data[0][0].features)
    	  		amenitiesLayer.addData(amenities.data[0][0].features);
-	  
+	    
+	    clusters.addLayer(amenitiesLayer).addTo(map);
 	  	// Bring selected to front
 	  	selected.bringToFront()
 	  	// Style selected
