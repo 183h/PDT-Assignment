@@ -18,6 +18,7 @@
     "Leaflet.EasyButton": "^2.2.4",
     "list.js": "^1.5.0",
     "Leaflet.awesome-markers": "^2.0.2",
-    "font-awesome": "fontawesome#^4.7.0"
+    "font-awesome": "fontawesome#^4.7.0",
+    "leaflet.markercluster": "v1.2.0"
   }
 }
