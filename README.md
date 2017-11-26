@@ -60,7 +60,7 @@ Odpoveď:
   }]
 }
 ```
-<br>
+
 ```/api/get/amenities/:hike/:distance``` - služba vráti všetky kultúrne zaujímavosti vzhľadom na zadanú turistickú trasu. Parameter určuje v akej maximálnej vzdialenosti sa zaujímavosť môže nachádzať od trasy.
 Odpoveď:
 
