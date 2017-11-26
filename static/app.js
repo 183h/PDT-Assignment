@@ -117,7 +117,7 @@ $(document).ready(function() {
       	});
 	  	
 	  	selected = e.layer
-	  	amenities = callApi('api/get/amenities/'+e.layer.feature.properties.f1)
+	  	amenities = callApi('api/get/amenities/'+e.layer.feature.properties.f1+'/'+$('#slider').slider("option", "value"))
 	  	if (amenities.data[0][0].features)
    	  		amenitiesLayer.addData(amenities.data[0][0].features);
 	    
@@ -237,4 +237,17 @@ $(document).ready(function() {
 	};
 
 	L.control.layers(null, overlayMaps).addTo(map);
+
+	$(function() {
+	  $("#slider").slider({
+	    value:5,
+	    min: 0,
+	    max: 10,
+	    step: 1,
+	    slide: function(event, ui) {
+	      $("#amount").val(ui.value + " km");
+	    }
+	  });
+	  $("#amount").val($("#slider").slider("value") + " km");
+	});
 });
