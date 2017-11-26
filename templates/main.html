@@ -13,6 +13,7 @@
     <link rel="stylesheet" media="screen" href ="{{ url_for('static', filename='leaflet.markercluster/dist/MarkerCluster.Default.css') }}">
     <link rel="stylesheet" media="screen" href ="{{ url_for('static', filename='leaflet.markercluster/dist/MarkerCluster.css') }}">
     <link rel="stylesheet" media="screen" href ="{{ url_for('static', filename='leaflet-minimap/dist/Control.MiniMap.min.css') }}">
+    <link rel="stylesheet" media="screen" href ="{{ url_for('static', filename='jquery-ui/themes/base/jquery-ui.min.css') }}">
 
     <script type="text/javascript" src="{{url_for('static', filename='jquery/dist/jquery.min.js')}}">
     </script>
@@ -35,6 +36,8 @@
     <script type="text/javascript" src="{{ url_for('static', filename='leaflet.markercluster/dist/leaflet.markercluster.js') }}">
     </script>
     <script type="text/javascript" src="{{ url_for('static', filename='leaflet-minimap/dist/Control.MiniMap.min.js') }}">
+    </script>
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-ui/jquery-ui.min.js')}}">
     </script>
 
     <style type="text/css">
@@ -69,6 +72,13 @@
                 <div id="hikeList" dir="rtl" class="list list-group"></div>
                 <ul id="pages" class="pagination"></ul>
             </div>
+            <hr />
+            <p>
+                <label for="amount">Distance of amenities from hike:</label>
+                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </p>
+ 
+            <div id="slider"></div>
         </div>
 
         <div class="col">
