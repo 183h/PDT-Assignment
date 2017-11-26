@@ -49,8 +49,8 @@ def api_get_hiking():
     return jsonify(data=response)
 
 
-@app.route("/api/get/amenities/<hike>")
-def api_get_amenities(hike):
+@app.route("/api/get/amenities/<hike>/<distance>")
+def api_get_amenities(hike, distance):
     conn = connect("dbname=gis user=postgres")
     cur = conn.cursor()
 
@@ -75,11 +75,11 @@ def api_get_amenities(hike):
                     where \
                         p.name is not null \
                         and p.historic is not null \
-                        and ST_DWithin(h.geometry, p.way, 5000) \
+                        and ST_DWithin(h.geometry, p.way, %s) \
                 ) AS f \
             ) AS fc;"
         ),
-        [hike]
+        [hike, int(distance) * 1000]
     )
 
     response = cur.fetchall()
