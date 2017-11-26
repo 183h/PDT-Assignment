@@ -97,6 +97,8 @@ $(document).ready(function() {
 	};
 	var hikeList = new List('hike-list', options);
 
+ 	clusters = L.markerClusterGroup();
+
 	// functions definitions
 	function hikeClicked(e) {
 		// Check for selected
@@ -106,7 +108,7 @@ $(document).ready(function() {
 	  	}
 	  
 	  	// Assign new selected
-	  	clusters = L.markerClusterGroup();
+	  	clusters.clearLayers();
 
 	  	amenitiesLayer.clearLayers()
 	  	amenitiesLayer = L.geoJSON(null, {
