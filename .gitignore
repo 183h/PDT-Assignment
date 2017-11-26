@@ -9,6 +9,7 @@ static/Leaflet.awesome-markers
 static/font-awesome
 static/leaflet.markercluster
 /static/leaflet-minimap
+/static/jquery-ui
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
