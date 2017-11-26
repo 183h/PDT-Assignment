@@ -20,6 +20,7 @@
     "Leaflet.awesome-markers": "^2.0.2",
     "font-awesome": "fontawesome#^4.7.0",
     "leaflet.markercluster": "v1.2.0",
-    "leaflet-minimap": "leaflet-MiniMap#^3.6.0"
+    "leaflet-minimap": "leaflet-MiniMap#^3.6.0",
+    "jquery-ui": "^1.12.1"
   }
 }
