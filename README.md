@@ -139,7 +139,7 @@ Odpoveď:
 Na nasledujúcom obrázku je zobrazený celkový vzhľad vytvorenej aplikácie.
 ![whole_app](https://github.com/mpuk/PDT-Assignment/blob/master/images/whole_app.png)
 
-Trasy sú rozlíšené farebne podľa zložitosti. Modré trasy majú dĺžku pod 50 kilometrov, červené trasy sú dlhé od 50 do111 100 kilometrov a fialové trasy maju dĺžku nad 100 kilometrov.
+Trasy sú rozlíšené farebne podľa zložitosti. Modré trasy majú dĺžku pod 50 kilometrov, červené trasy sú dlhé od 50 do 100 kilometrov a fialové trasy maju dĺžku nad 100 kilometrov.
 
 <br/>
 
