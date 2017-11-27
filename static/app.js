@@ -64,7 +64,8 @@ $(document).ready(function() {
 	var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
 	var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
 	var token = 'pk.eyJ1IjoibXB1ayIsImEiOiJjajgwMzViM2k2OG1jMnFudHFpZWFpcDBuIn0.tJeJccXTdskhNbv2IS5kAQ';
-	var selected
+	selected = null
+	tempSelected = null
 	map = L.map('mapid').setView([48.6905689, 19.4581682], 8);
 	amenitiesLayer = L.geoJSON(null).addTo(map);
 
@@ -101,6 +102,9 @@ $(document).ready(function() {
 
 	// functions definitions
 	function hikeClicked(e) {
+		if (!e)
+			return
+
 		// Check for selected
 	  	if (selected) {	    
 	    	// Reset selected to default style
@@ -119,6 +123,7 @@ $(document).ready(function() {
       	});
 	  	
 	  	selected = e.layer
+	  	tempSelected = e
 	  	amenities = callApi('api/get/amenities/'+e.layer.feature.properties.f1+'/'+$('#slider').slider("option", "value"))
 	  	if (amenities.data[0][0].features)
    	  		amenitiesLayer.addData(amenities.data[0][0].features);
@@ -243,11 +248,13 @@ $(document).ready(function() {
 	$(function() {
 	  $("#slider").slider({
 	    value:5,
-	    min: 0,
+	    min: 1,
 	    max: 10,
 	    step: 1,
 	    slide: function(event, ui) {
 	      $("#amount").val(ui.value + " km");
+	      $(this).slider('value', ui.value);
+	      hikeClicked(tempSelected);
 	    }
 	  });
 	  $("#amount").val($("#slider").slider("value") + " km");
