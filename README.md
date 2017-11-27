@@ -18,19 +18,22 @@ Build a map-based application, which lets the user see geo-based data on a map a
 
 ## My project
 
-**Application description**:
+### **Application description**:
 
 Aplikácia zobrazuje používateľovi turistické trasy na slovensku podľa ich obtiažnosti. Zároveň umožňuje používateľovi zobraziť zaujímavé turistické miesta vzhľadom na označenú turistickú trasu do zvolenej vzdialenosti.
 
-**Data source**:
+- niektoré trasy v databáze sú reprezentované viacerými geometrickými objektami. Preto pri dopytovaní pomocou funkcie ```ST_Collect``` sa vykoná spojenie týchto častí do jedného celku.
+- každý dopyt poskytuje dáta vo forme, ktorá nevyžaduje dodatočnú úpravu ich tvaru, formátu a umožňuje ich okamžité použitie.
+
+### **Data source**:
 
 Geografické dáta boli stiahnuté z [Geofabrik.de - Slovakia](http://download.geofabrik.de/europe/slovakia-latest.osm.pbf).
 
-**Technologies used**:
+### **Technologies used**:
 
 Flask, Leaflet, Postgis, JQuery, JQuery-UI, ListJS, Bootstrap, Leafet Awesome Markers, Leaflet Marker Cluster, Leaflet Minimap
 
-**API**:
+### **API**:
 
 ```/api/get/hikes``` - služba vráti všetky turistické trasy nachádzajúce sa v databáze. Zároveň pre každú trasu vráti jej meno, operátora, dĺžku v metroch a súradnice stredu trasy.
 Odpoveď:
@@ -131,4 +134,58 @@ Odpoveď:
 }
 ```
 
-**Functionality**:
+### **Functionality**:
+
+Na nasledujúcom obrázku je zobrazený celkový vzhľad vytvorenej aplikácie.
+![whole_app](https://github.com/mpuk/PDT-Assignment/blob/master/images/whole_app.png)
+
+Trasy sú rozlíšené farebne podľa zložitosti. Modré trasy majú dĺžku pod 50 kilometrov, červené trasy sú dlhé od 50 do111 100 kilometrov a fialové trasy maju dĺžku nad 100 kilometrov.
+
+<br/>
+
+#### Zoznam trás
+
+![hikes_list](https://github.com/mpuk/PDT-Assignment/blob/master/images/hikes_list.png)
+
+Vedľa mapy sa nachádza interaktívny zoznam trás. Výhľadávanie dynamicky obnovuje hodnoty v liste podľa zvoleného hľadaného reťazca. Po kliknutí na položku v zozname sa vykoná nastavenie mapy na pozíciu kde sa daná trasa nachádza. Ak list obsahuje viac ako 5 trás tak sa na zvyšok aplikuje stránkovanie.
+
+<br/>
+
+#### Slider
+
+![slider](https://github.com/mpuk/PDT-Assignment/blob/master/images/slider.png)
+
+Používateľ má k dispozícii slider pre nastavenie maximálnej vzdialenosti v akej sa kultúrna zaujímavosť môže nachádzať od trasy. Ak má používateľ označenú trasu a použije slider, aplikácia dynamicky vykreslí zaujímavosti vzhľadom na novú hodnotu slider-a.
+
+<br/>
+
+#### Minimap
+
+![minimap](https://github.com/mpuk/PDT-Assignment/blob/master/images/minimap.png)
+
+V pravom dolnom rohu mapy sa nachádza menšia mapa. Túto mapku je možné skryť stlačením tlačidla v jej pravom dolnom rohu.
+Na menšej mapke sú rovnako ako na hlavnej vykreslené všetky turistické trasy. Ofset priblíženia menšej mapky je vždy menší o hodnotu -3 oproti hlavnej mape.
+
+<br/>
+
+#### Control layers
+
+![layers](https://github.com/mpuk/PDT-Assignment/blob/master/images/layers_control.png)
+
+V pravom hornom rohu mapy sa nachádza tlačidlo, ktoré sa rozbalí keď naňho používateľ ukáže kurzorom. Na rozbalenom komponente sa nachádzajú 3 checkbox-y. Pomocou nich môže používateľ zvoliť, ktoré trasy vzhľadom na ich náročnosť mu budú zobrazené.
+
+<br/>
+
+#### Clusterization
+
+![clusterization](https://github.com/mpuk/PDT-Assignment/blob/master/images/clusterization.png)
+
+Keď používateľ klikne na trasu zobrazia sa mu kultúrne zaujímavosti v okolí. Na body, ktoré tieto zaujímavosti označujú je aplikované zhlukovanie a pri odľalovaní sa body dynamicky spájajú do zhlukov a naopak pri približovaní sa zhluky roztiahnu do bodov.
+
+<br/>
+
+#### Different amenities markers
+
+![markers](https://github.com/mpuk/PDT-Assignment/blob/master/images/different_amenities_markers.png)
+
+Rôzne ukazovatele na mape obsahujú rôzne ikony vzhľadom nato na akú kultúrnu zaujímavosť ukazujú.
